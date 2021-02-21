@@ -1,8 +1,8 @@
 import fetchJsonp from 'fetch-jsonp'
 
-export class VkApi {
-    constructor(apiKey) {
-        this.apiKey = apiKey
+export class VkClient {
+    constructor() {
+        this.apiKey = '6e3a4eb96e3a4eb96e3a4eb90e6e4cc73d66e3a6e3a4eb90e086282dcfd0328ef122627'
         this.baseUrl = 'https://api.vk.com/method'
         this.apiVer = '5.52'
     }
@@ -10,10 +10,8 @@ export class VkApi {
     async getComments(group_id, topic_id) {
         const method = 'board.getComments'
 
-        await this.execute(method, {group_id, topic_id})
-            .then(result => {
-                return result
-            })
+        const resJson = await this.execute(method, {group_id, topic_id})
+        return resJson.response
     }
 
     async execute(methodName, args){
@@ -24,9 +22,11 @@ export class VkApi {
 
         const url = `${this.baseUrl}/${methodName}?${argsStr}access_token=${this.apiKey}&v=${this.apiVer}`
 
-        return await fetchJsonp(url, {
+        let response = await fetchJsonp(url, {
             method: 'GET',
             mode: 'no-cors',
-        }).then(response => response.json())
+        })
+
+        return await response.json()
     }
 }

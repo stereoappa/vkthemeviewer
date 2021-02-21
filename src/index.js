@@ -1,18 +1,10 @@
-import './module'
 import './scss/index.scss'
-import {VkApi} from "@/core/VkApi";
-
-console.log('ind')
-
-
-const apiKey = ''
-const vk = new VkApi(apiKey)
+import {VkClient} from "@/core/VkClient";
+import {CommentsPage} from "@/components/CommentsPage/CommentsPage";
 
 
-vk.getComments(134722432,35366383)
-    .then(
-        items => {
-            document.getElementById('app')
-                .append(JSON.stringify(items))
-        }
-    )
+new CommentsPage('#app', {
+    groupId: 134722432,
+    topicId: 35366383
+}).getRoot()
+
