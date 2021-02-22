@@ -1,10 +1,10 @@
 import './scss/index.scss'
 import {VkClient} from "@/core/VkClient";
-import {CommentsPage} from "@/components/CommentsPage/CommentsPage";
+import {VkThemeViewer} from "@/components/VkThemeViewer/VkThemeViewer";
 
 
-new CommentsPage('#app', {
+new VkThemeViewer('#app', {
     groupId: 134722432,
     topicId: 35366383
-}).getRoot()
+}).start()
 
