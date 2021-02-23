@@ -1,10 +1,104 @@
-$red: blue;
+.vkthemeviewer {
+  font-family: -apple-system,BlinkMacSystemFont,'Roboto','Helvetica Neue',Geneva,"Noto Sans Armenian","Noto Sans Bengali","Noto Sans Cherokee","Noto Sans Devanagari","Noto Sans Ethiopic","Noto Sans Georgian","Noto Sans Hebrew","Noto Sans Kannada","Noto Sans Khmer","Noto Sans Lao","Noto Sans Osmanya","Noto Sans Tamil","Noto Sans Telugu","Noto Sans Thai",sans-serif,arial,Tahoma,verdana;
 
-body {
+  min-width: 100%;
+  font-size: 13px;
 
+  padding: 0 20px;
+
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+
+  a {
+    color: #2a5885;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .vkthemeviewer-header {
+    border-bottom: 1px solid #e7e8ec;
+    height: 30px;
+  }
+
+  .vkthemeviewer-pagination {
+    float: right;
+    user-select: none;
+
+    a {
+      display: inline-block;
+      &:hover{
+        text-decoration: none;
+      }
+
+      .pg_in {
+        padding: 3px 18px 7px;
+        color: #939393;
+        height: 26px;
+
+        &:hover {
+          padding-bottom: 0;
+          border-bottom: 2px solid #2a5885;
+        }
+      }
+    }
+  }
+
+  .vkthemeviewer-posts {
+    .post {
+      padding: 15px 0;
+      margin-top: -1px;
+      border: solid #e7e8ec;
+      border-width: 1px 0;
+      position: relative;
+
+      .post_image {
+        float: left;
+        width: 50px;
+        height: 50px;
+          .post_img {
+            border-radius: 50%;
+            border: 0;
+          }
+      }
+
+      .post-content {
+        margin-left: 62px;
+
+        .post_author {
+          font-weight: 700;
+          -webkit-font-smoothing: antialiased;
+          line-height: 16px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .post-text {
+          line-height: 19px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        font-size: 0;
+        line-height: 0;
+        visibility: hidden;
+      }
+    }
+
+
+  }
 }
 
-.comment{
-  border: 1px solid black;
-  padding: 5px;
-}
+
+

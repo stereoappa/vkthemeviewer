@@ -1,5 +1,4 @@
 import './scss/index.scss'
-import {VkClient} from "@/core/VkClient";
 import {VkThemeViewer} from "@/components/VkThemeViewer/VkThemeViewer";
 
 

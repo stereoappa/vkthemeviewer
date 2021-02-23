@@ -7,10 +7,10 @@ export class VkClient {
         this.apiVer = '5.52'
     }
 
-    async getComments(group_id, topic_id, offset) {
+    async getComments(group_id, topic_id, offset, withProfiles = false) {
         const method = 'board.getComments'
 
-        const resJson = await this.execute(method, {group_id, topic_id, offset})
+        const resJson = await this.execute(method, {group_id, topic_id, offset, extended: +withProfiles })
         return resJson.response
     }
 

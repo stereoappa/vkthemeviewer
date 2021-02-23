@@ -1,55 +1,39 @@
 import {createViewer} from "@/components/VkThemeViewer/vkthemeviewer.template";
 import {Paging} from "@/components/Paging/Paging"
-import {Mediator} from "@/core/Mediator"
 
 export class VkThemeViewer {
     constructor($root, options) {
         this.$root = document.querySelector($root)
 
-        this.mediator = new Mediator()
+        this.paging = new Paging($root, options)
+        this.pageNumber = 0
 
-        this.paging = new Paging($root,{
-                ...options,
-                mediator: this.mediator})
-
-        this.registerMediator()
+        this.onClick = this.onClick.bind(this)
+        this.$root.addEventListener('click', this.onClick)
     }
 
-    async start(startPage = 1) {
-        await this.renderPage(startPage)
+    async start() {
+        await this.renderPage()
     }
 
-    registerMediator() {
-        this.unsubscribers = []
-
-        this.onNextClick = this.onNextClick.bind(this)
-        this.onBacktClick = this.onBackClick.bind(this)
-
-        this.unsubscribers.push(
-            this.mediator.subscribe('paging:next', this.onNextClick)
-        )
-
-        this.unsubscribers.push(
-            this.mediator.subscribe('paging:back', this.onBackClick))
+    async renderPage(){
+        const pageHtml = createViewer(await this.paging.getPageHtml(this.pageNumber))
+        this.$root.innerHTML = pageHtml
     }
 
-    async renderPage(number){
-        const viewehtml = createViewer(await this.paging.getPageHtml(number))
-        this.$root.innerHTML = viewehtml
-    }
+    async onClick(event) {
+        if (event.target.dataset.action === 'next-btn'){
+            this.pageNumber++
+        }
+        else if (event.target.dataset.action === 'back-btn' && this.pageNumber > 0) {
+            this.pageNumber--
+        } else
+            return
 
-    onNextClick(){
-        console.log('next click')
-        this.renderPage(2)
+        await this.renderPage()
     }
-
-    onBackClick(){
-        console.log('back click')
-        this.renderPage(1)
-    }
-
 
     destroy() {
-        this.unsubscribers.forEach(unsub => unsub())
+        this.$root.removeEventListener('click', this.onClick)
     }
 }

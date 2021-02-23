@@ -3,6 +3,9 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const isProd = process.env.NODE_ENV === 'production'
+const isDev = !isProd
+
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
@@ -17,6 +20,11 @@ module.exports = {
             '@': path.resolve(__dirname, 'src')
         }
     },
+    devtool: isDev ? 'source-map' : false,
+    devServer: {
+        hot: isDev,
+        port: 3000
+    },
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
@@ -29,7 +37,9 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
                     'css-loader',
                     'sass-loader'
                 ],

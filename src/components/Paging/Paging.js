@@ -3,39 +3,25 @@ import {createPage} from "@/components/Paging/paging.template";
 
 export class Paging {
     constructor($root, options) {
-        //this.containerName = 'vkthemeviewer-page'
-        //this.$root = document.querySelector('.' + this.containerName)
-        debugger
-        this.$root = document.querySelector($root)
         this.groupId = options.groupId
         this.topicId = options.topicId
         this.countOnPage = options.countOnPage ?? 20
         this.sort = options.sort ?? 'asc'
 
         this.vk = new VkClient()
-        this.mediator = options.mediator
-
-        this.onClick = this.onClick.bind(this)
-        this.$root.addEventListener('click', this.onClick)
     }
 
     async getPageHtml(pageNumber) {
-        const offset = pageNumber * this.countOnPage
+        let offset = pageNumber * this.countOnPage
+        if (offset < 0)
+            offset = 0
 
-        const comments = await this.vk.getComments(this.groupId, this.topicId, offset)
+        let response = await this.vk.getComments(this.groupId, this.topicId, offset, true)
 
-        return this.toHtml(comments.items)
+        return this.toHtml(response)
     }
 
-    onClick(event) {
-        debugger
-        const target = event.target
-        console.log(target)
-
-        this.mediator.emit('paging:next')
-    }
-
-    toHtml(comments){
-        return createPage(comments)
+    toHtml(response){
+        return createPage(response)
     }
 }
