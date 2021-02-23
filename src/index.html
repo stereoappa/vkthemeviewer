@@ -11,14 +11,16 @@
 
 <!-- Put this div tag to the place, where the VkThemeViewer block will be -->
 <div id="vkthemeviewer-container"></div>
-<script type="text/javascript">
+<script>
     window.onload = function () {
         VkThemeViewer.run('#vkthemeviewer-container', {
             groupId: 134722432,
             topicId: 35366383,
             //Or you can use sort:'asc' value for ascending sort
             sort: 'desc',
-            apiKey: '6e3a4eb96e3a4eb96e3a4eb90e6e4cc73d66e3a6e3a4eb90e086282dcfd0328ef122627'})
+            apiKey: '',
+            perPageCount: 6
+        })
     }
 </script>
 <!-- End of VkThemeViewer block -->
