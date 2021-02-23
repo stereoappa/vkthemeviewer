@@ -1,4 +1,4 @@
-export function createViewer(pageHtml){
+export function createViewer(postsHtml){
     const v =
     `<div class="vkthemeviewer">
         <div class="vkthemeviewer-header">
@@ -6,7 +6,7 @@ export function createViewer(pageHtml){
         </div>
         
         <div class="vkthemeviewer-posts">
-            ${pageHtml}
+            ${postsHtml}
         </div>
         ${createPagination()}
     </div>
