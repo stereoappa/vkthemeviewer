@@ -1,4 +1,4 @@
-import {createViewer} from "@/components/VkThemeViewer/vkthemeviewer.template";
+import {createViewer} from "@/components/VkThemeViewer/vkthemeviewer.template"
 import {Paging} from "@/components/Paging/Paging"
 
 export class VkThemeViewer {
@@ -6,31 +6,37 @@ export class VkThemeViewer {
         this.$root = document.querySelector($root)
 
         this.paging = new Paging($root, options)
-        this.pageNumber = 0
 
+        this.init()
+    }
+
+    init(){
         this.onClick = this.onClick.bind(this)
         this.$root.addEventListener('click', this.onClick)
     }
 
     async start() {
-        await this.renderPage()
-    }
-
-    async renderPage(){
-        const pageHtml = createViewer(await this.paging.getPageHtml(this.pageNumber))
+        const pageHtml = await createViewer(await this.paging.getPageHtml(0))
         this.$root.innerHTML = pageHtml
     }
 
     async onClick(event) {
+        let pageHtml
+
         if (event.target.dataset.action === 'next-btn'){
-            this.pageNumber++
+            pageHtml = await this.paging.getNextPage()
         }
-        else if (event.target.dataset.action === 'back-btn' && this.pageNumber > 0) {
-            this.pageNumber--
+        else if (event.target.dataset.action === 'back-btn') {
+            pageHtml = await this.paging.getPreviousPage()
         } else
             return
 
-        await this.renderPage()
+        if (!pageHtml) {
+            return
+        }
+
+        const viewerHtml = createViewer(pageHtml)
+        this.$root.innerHTML = viewerHtml
     }
 
     destroy() {

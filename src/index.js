@@ -1,6 +1,16 @@
 import './scss/index.scss'
-import {VkThemeViewer} from "@/components/VkThemeViewer/VkThemeViewer";
+import {VkThemeViewer} from "@/components/VkThemeViewer/VkThemeViewer"
+
+let Instance
 
 export async function run ($root, options) {
-    await new VkThemeViewer($root, options).start()
+    this.Instance = new VkThemeViewer($root, options)
+    await this.Instance.start()
 }
+
+export async function destroy () {
+    if (this.Instance) {
+        this.Instance.destroy()
+    }
+}
+
