@@ -1,9 +1,6 @@
 import './scss/index.scss'
 import {VkThemeViewer} from "@/components/VkThemeViewer/VkThemeViewer";
 
-
-new VkThemeViewer('#app', {
-    groupId: 134722432,
-    topicId: 35366383
-}).start()
-
+export async function run ($root, options) {
+    await new VkThemeViewer($root, options).start()
+}

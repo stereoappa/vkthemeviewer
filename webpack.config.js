@@ -12,7 +12,9 @@ module.exports = {
     entry: './index.js',
     output: {
         filename: "bundle.[hash].js",
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd',
+        library: 'VkThemeViewer'
     },
     resolve: {
         extensions: ['.js'],
