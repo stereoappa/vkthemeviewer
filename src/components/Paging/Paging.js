@@ -12,7 +12,10 @@ export class Paging {
         this.perPageCount = options.perPageCount ?? 20
 
         this.vk = new VkClient(options.apiKey)
+    }
 
+    get PagesAmount() {
+        return Math.ceil(this.postsCount / this.perPageCount)
     }
 
     async getNextPage() {
@@ -24,27 +27,28 @@ export class Paging {
     }
 
     async getPageHtml(pageNumber) {
-        if (!this.isPageExists(pageNumber)) {
+        if (!this.isPageExist(pageNumber)) {
             return
         }
-
-        this.pageNumber = pageNumber
 
         let offset = pageNumber * this.perPageCount
         if (offset < 0)
             offset = 0
 
         let response = await this.vk.getComments(this.groupId, this.topicId, offset, true)
+
+        this.pageNumber = pageNumber
         this.postsCount = response.count
 
-        return createPage(response)
+        return createPage(response, (this.pageNumber + 1), this.PagesAmount)
     }
 
-    isPageExists(pageNumber) {
+    isPageExist(pageNumber) {
+        debugger
         if (pageNumber === 0 && this.postsCount === 0) {
             return true
         }
 
-        return pageNumber < Math.ceil(this.postsCount / this.perPageCount)
+        return pageNumber >= 0 && pageNumber < this.PagesAmount
     }
 }

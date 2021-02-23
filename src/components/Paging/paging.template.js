@@ -1,7 +1,7 @@
 const VK_HOST = 'https://vk.com'
 const USERLINK_REGEX = /\[(id{1}\d+)(.*)\|(.*)\]/g
 
-export function createPage(response = []){
+export function createPage(response = [], pageNumber, pagesAmount){
     let html = ''
 
     for (let i=0; i < response.items.length; i++) {
@@ -17,7 +17,19 @@ export function createPage(response = []){
         }
     }
 
-    return vkReplaceUserLinks(html)
+    return `
+        <div class="vkthemeviewer-header">
+             <div class="vkthemeviewer-header-counter">
+                  <span>${pageNumber} из ${pagesAmount}</span>
+             </div>
+             ${createPagination()}
+        </div>
+        
+        <div class="vkthemeviewer-posts">
+            ${vkReplaceUserLinks(html)}
+        </div>
+        ${createPagination()}
+    `
 }
 
 function createComment(comment, profile){
@@ -56,6 +68,18 @@ function createGroupComment(comment, group) {
     `
 }
 
+function createPagination() {
+    return `
+            <div class="vkthemeviewer-pagination">
+               <a data-action="back-btn" title="Назад">
+                    <div data-action="back-btn" class="pg_in">«</div>
+               </a>
+                <a data-action="next-btn" title="Вперёд">
+                    <div data-action="next-btn" class="pg_in">»</div>
+               </a>
+            </div>
+    `
+}
 
 function vkReplaceUserLinks(str) {
     return str.replace(USERLINK_REGEX, ((match, id, _, userName) => {

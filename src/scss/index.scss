@@ -23,6 +23,12 @@
   .vkthemeviewer-header {
     border-bottom: 1px solid #e7e8ec;
     height: 30px;
+
+    .vkthemeviewer-header-counter {
+      display: inline-block;
+      font-weight: 700;
+      padding: 6px;
+    }
   }
 
   .vkthemeviewer-pagination {
