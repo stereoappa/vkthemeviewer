@@ -35,7 +35,7 @@ export class Paging {
         if (offset < 0)
             offset = 0
 
-        let response = await this.vk.getComments(this.groupId, this.topicId, offset, true)
+        let response = await this.vk.getComments(this.groupId, this.topicId, offset, this.sort, true)
 
         this.pageNumber = pageNumber
         this.postsCount = response.count
