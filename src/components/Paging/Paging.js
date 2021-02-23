@@ -44,7 +44,6 @@ export class Paging {
     }
 
     isPageExist(pageNumber) {
-        debugger
         if (pageNumber === 0 && this.postsCount === 0) {
             return true
         }

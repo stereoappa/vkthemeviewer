@@ -10,7 +10,7 @@ module.exports = {
     mode: 'development',
     entry: ['@babel/polyfill', './index.js'],
     output: {
-        filename: "bundle.[hash].js",
+        filename: "vk.widget.themeviewer.js",
         path: path.resolve(__dirname, 'dist'),
         libraryTarget: 'umd',
         library: 'VkThemeViewer'
