@@ -6,10 +6,22 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>VK theme viewer</title>
-</head>
+    <script defer src="vk.widget.themeviewer.js"></script></head>
 <body>
 
-    <div id="app" class="container"></div>
+<!-- Put this div tag to the place, where the VkThemeViewer block will be -->
+<div id="vkthemeviewer-container"></div>
+<script type="text/javascript">
+    window.onload = function () {
+        VkThemeViewer.run('#vkthemeviewer-container', {
+            groupId: 134722432,
+            topicId: 35366383,
+            //Or you can use sort:'asc' value for ascending sort
+            sort: 'desc',
+            apiKey: '6e3a4eb96e3a4eb96e3a4eb90e6e4cc73d66e3a6e3a4eb90e086282dcfd0328ef122627'})
+    }
+</script>
+<!-- End of VkThemeViewer block -->
 
 </body>
 </html>
