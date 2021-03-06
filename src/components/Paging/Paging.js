@@ -40,7 +40,7 @@ export class Paging {
         this.pageNumber = pageNumber
         this.postsCount = response.count
 
-        return createPage(response, (this.pageNumber + 1), this.PagesAmount)
+        return createPage(response, this.topicId, (this.pageNumber + 1), this.PagesAmount)
     }
 
     isPageExist(pageNumber) {

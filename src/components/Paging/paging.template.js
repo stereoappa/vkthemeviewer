@@ -1,8 +1,12 @@
 const VK_HOST = 'https://vk.com'
 const USERLINK_REGEX = /\[(id{1}\d+)(.*)\|(.*)\]/g
 
-export function createPage(response = [], pageNumber, pagesAmount){
+let _topicId
+
+export function createPage(response = [], topicId, pageNumber, pagesAmount){
     let html = ''
+
+    _topicId = topicId
 
     for (let i=0; i < response.items.length; i++) {
         if (response.items[i].from_id < 0) {
@@ -45,9 +49,34 @@ function createComment(comment, profile){
                 <a target="_blank" class="author" href="${VK_HOST}/id${profile.id}">${profile.first_name} ${profile.last_name}</a>
             </div>
             <div class="post-text">${comment.text}</div>
+            <div class="post-attachments">${CreateAttachments(comment)}</div>
         </div>
     </div>
     `
+}
+
+function CreateAttachments(comment) {
+    if (!comment.attachments) {
+        return ''
+    }
+
+    let res = ''
+    comment.attachments.forEach(x => {
+        if (x.type === 'photo') {
+            res += `<div class="attachment-photo">
+                <img src="${x.photo.photo_604}" />
+            </div>`
+        } else if (x.type === 'video') {
+            res += `<div class="attachment-video" xmlns="http://www.w3.org/1999/html">
+            <b>Видео доступно по ссылке:</b></br>
+                <a href="https://vk.com/topic-${Math.abs(+comment.from_id)}_${_topicId}?z=video-${Math.abs(+comment.from_id)}_${x.video.id}" target="_blank">
+                   https://vk.com/topic-${Math.abs(+comment.from_id)}_${_topicId}?z=video-${Math.abs(+comment.from_id)}_${x.video.id}
+                </a>
+            </div>`
+        }
+    })
+
+    return res
 }
 
 function createGroupComment(comment, group) {
@@ -63,6 +92,7 @@ function createGroupComment(comment, group) {
                 <a target="_blank" class="author" href="${VK_HOST}/id${group.id}">${group.name}</a>
             </div>
             <div class="post-text">${comment.text}</div>
+            <div class="post-attachments">${CreateAttachments(comment)}</div>
         </div>
     </div>
     `
